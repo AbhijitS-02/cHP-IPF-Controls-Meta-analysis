@@ -238,7 +238,7 @@ generate_bubble_heatmap <- function(comparisons, out_dir) {
 
   # Set comparison order
   combined$Comparison <- factor(combined$Comparison,
-    levels = c("HP_vs_Ctrl", "HP_vs_IPF", "IPF_vs_Ctrl")
+    levels = c("HP_vs_IPF", "IPF_vs_Ctrl", "HP_vs_Ctrl")
   )
 
   # Define discrete bubble sizes for FDR categories (larger = more significant)
@@ -293,31 +293,36 @@ generate_bubble_heatmap <- function(comparisons, out_dir) {
       panel.background = element_rect(fill = "white"),
       # Axes
       axis.text.x = element_text(
-        size = 7.5, angle = 90, hjust = 1, vjust = 0.5,
-        color = "black", face = "plain"
+        size = 18, angle = 90, hjust = 1, vjust = 0.5,
+        color = "black", face = "bold"
       ),
-      axis.text.y = element_text(size = 10, color = "black", face = "bold"),
+      axis.text.y = element_text(size = 20, color = "black", face = "bold"),
       axis.ticks = element_line(color = "black", linewidth = 0.4),
       axis.ticks.length = unit(0.15, "cm"),
       # Legend
       legend.position = "bottom",
       legend.box = "horizontal",
-      legend.title = element_text(size = 9, face = "bold"),
-      legend.text = element_text(size = 8),
+      legend.title = element_text(size = 14, face = "bold"),
+      legend.text = element_text(size = 13),
       legend.key = element_rect(fill = "white", color = NA),
+      legend.key.size = unit(0.8, "cm"),
       legend.background = element_rect(fill = "white", color = NA),
       legend.margin = margin(t = 5, b = 5),
+      legend.spacing.x = unit(1, "cm"),
+      legend.box.spacing = unit(1, "cm"),
       # Plot margins
-      plot.margin = margin(t = 10, r = 15, b = 10, l = 10)
+      plot.margin = margin(t = 10, r = 15, b = 15, l = 10)
     ) +
     guides(
       fill = guide_colorbar(
-        order = 1, barwidth = 8, barheight = 1,
+        order = 1, barwidth = 10, barheight = 1.2,
         title.position = "top"
       ),
       size = guide_legend(
         order = 2, title.position = "top",
-        override.aes = list(fill = "grey50")
+        override.aes = list(fill = "grey50"),
+        keywidth = unit(1.4, "cm"),
+        keyheight = unit(1.4, "cm")
       )
     )
 
@@ -325,7 +330,7 @@ generate_bubble_heatmap <- function(comparisons, out_dir) {
   # Determine plot width dynamically based on number of cell types
   n_cells <- length(unique(combined$Cell_Type))
   plot_width <- max(10, n_cells * 0.35 + 4)
-  plot_height <- 7.5
+  plot_height <- 8
 
   # Save as landscape PDF
   pdf_file <- paste0(out_dir, "BubbleHeatmap_AllComparisons.pdf")
